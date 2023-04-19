@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WritingIdentifier</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WritingIdentifier.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary bg-gradient border-bottom box-shadow mb-3">
+            <div class="container d-flex justify-content-start ms-3">
+                <img src="~/NavbarLogo2.png" class="img" />
+                <a id="logoName" class="navbar-brand m-2" asp-area="" asp-controller="Home" asp-action="Index">WritingIdentifier</a>
+            </div>
+            <div class="container d-flex justify-content-end me-3">
+                <a class="text-light btn btn-danger m-1" asp-action="Writers" asp-controller="Home">Writers</a>
+                <a class="text-light btn btn-danger m-1" asp-action="Index" asp-controller="Home">Test Writers</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

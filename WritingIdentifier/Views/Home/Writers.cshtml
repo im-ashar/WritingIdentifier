@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Writers";
+}
+
+<div class="text-light w-50 mx-auto my-auto">
+    <h2 class="text-center text-light bg-danger rounded-2">Writers</h2>
+    <form method="post" asp-action="Writers" EncType="multipart/form-data">
+
+        <div class="form-floating mb-3 form-group">
+            <h5>Enter Folder Name</h5>
+            <input type="text"
+                   class="form-control bg-dark text-light"
+                   id="folderName" name="folderName" />
+        </div>
+        <div class="form-floating mb-3 form-group">
+            <h5>Enter Image Name</h5>
+            <input type="text"
+                   class="form-control bg-dark text-light"
+                   id="imageName" name="imageName" />
+        </div>
+        <div class="form-floating mb-3 form-group">
+            <h5>Select Images To Upload</h5>
+            <input type="file"
+                   class="form-control bg-dark text-light"
+                   id="file" name="file" multiple="multiple" />
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-danger btn-login text-uppercase fw-bold">
+                Upload
+            </button>
+        </div>
+    </form>
+    @if (ViewBag.UploadStatus != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.UploadStatus");
+            };
+        </script>
+    }
+</div>
+<script>
+    function showSpinner() {
+        $("#spinner").removeClass("d-none");
+    }
+</script>
+

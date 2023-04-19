@@ -1,0 +1,103 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Test Writers";
+}
+
+<div class="text-light w-50 mx-auto my-auto">
+    <h2 class="text-center text-light bg-danger rounded-2">Test Writers</h2>
+    <form method="post" asp-action="TestWriters" EncType="multipart/form-data">
+
+        <div class="form-floating mb-3 form-group">
+            <h5>Enter Folder Name</h5>
+            <input type="text"
+                   class="form-control bg-dark text-light"
+                   id="folderName" name="folderName" />
+        </div>
+        <div class="form-floating mb-3 form-group">
+            <h5>Enter Image Name</h5>
+            <input type="text"
+                   class="form-control bg-dark text-light"
+                   id="imageName" name="imageName" />
+        </div>
+        <div class="form-floating mb-3 form-group">
+            <h5>Select Image To Upload</h5>
+            <input type="file"
+                   class="form-control bg-dark text-light"
+                   id="file" name="file" />
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-danger btn-login text-uppercase fw-bold" onclick="showSpinner()">
+                Upload
+            </button>
+        </div>
+    </form>
+    <div class="d-flex">
+        <button type="button" id="resultBtn" onclick="AjaxCall()" class="btn btn-success d-inline-flex m-3 mx-auto" asp-action="GetOutput">Get Result</button>
+        <p id="countdown-timer"></p>
+    </div>
+    <div class="text-center" id="outPut"></div>
+
+    <div id="spinner" class="spinner-border text-light m-2 d-block mx-auto d-none" role="status">
+    </div>
+
+    @if (ViewBag.UploadStatus != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.UploadStatus");
+            };
+        </script>
+    }
+</div>
+
+<script>
+    function showSpinner() {
+        $("#spinner").removeClass("d-none");
+    }
+
+    function AjaxCall() {
+
+
+        $.ajax({
+            url: "/Home/GetOutput",
+            type: "GET",
+            success: function (result) {
+                GetResult(result);
+            },
+            error: function (result) {
+                alert(result)
+            }
+        })
+    }
+    function GetResult(result) {
+        const myButton = document.getElementById('resultBtn');
+        myButton.disabled = true;
+        // Get a reference to the button element
+        const outPut = document.getElementById('outPut');
+
+        // Get a reference to the countdown timer element
+        const countdownTimer = document.getElementById('countdown-timer');
+
+        // Set the initial countdown value to 120 (2 minutes)
+        let countdownValue = 120;
+
+        // Update the countdown timer every second
+        const countdownInterval = setInterval(() => {
+            // Decrement the countdown value by 1 second
+            countdownValue--;
+
+            // Update the countdown timer text
+            countdownTimer.innerText = `${Math.floor(countdownValue / 60)}:${countdownValue % 60
+                .toString()
+                .padStart(2, '0')}`;
+
+            // Enable the button when the countdown value reaches 0
+            if (countdownValue <= 0) {
+                clearInterval(countdownInterval);
+                const para = document.createElement("p");
+                para.innerHTML = result;
+                outPut.appendChild(para);
+            }
+        }, 1000); // Update the countdown timer every second (1000 milliseconds)
+    }
+</script>
